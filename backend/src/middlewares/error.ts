@@ -5,7 +5,7 @@ import DuplicateError from '../errors/duplicate-error';
 import NotFoundError from '../errors/not-found-error';
 import ServerError from '../errors/server-error';
 
-export default (error: Error, req: Request, res: Response, next: NextFunction) => {
+export default (error: Error, _req: Request, res: Response, _next: NextFunction) => {
   if (isCelebrateError(error)) {
     res.status(400).send({ message: 'Validation failed' });
   } else if (

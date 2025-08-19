@@ -29,8 +29,8 @@ export const createProduct = (req: Request, res: Response, next: NextFunction) =
     });
 };
 
-export const getProducts = (req: Request, res: Response, next: NextFunction) => {
+export const getProducts = (_req: Request, res: Response, next: NextFunction) => {
   Product.find()
     .then((products) => res.status(200).send({ items: products, total: products.length }))
-    .catch((error) => next(new ServerError('Internal server error')));
+    .catch((_error) => next(new ServerError('Internal server error')));
 };

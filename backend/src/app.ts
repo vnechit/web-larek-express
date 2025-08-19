@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -8,6 +8,7 @@ import orderRouter from './routes/order';
 import validateOrder from './middlewares/validateOrder';
 import errorSender from './middlewares/error';
 import { requestLogger, errorLogger } from './middlewares/logger';
+import NotFoundError from './errors/not-found-error';
 
 config();
 
@@ -25,6 +26,9 @@ app.use(requestLogger);
 
 app.use('/product', productRouter);
 app.use('/order', validateOrder, orderRouter);
+app.use('*', (_req: Request, _res: Response, next: NextFunction) => {
+  next(new NotFoundError('404 Not Found'));
+});
 
 app.use(errorLogger);
 app.use(errorSender);
