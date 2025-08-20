@@ -5,7 +5,6 @@ import cors from 'cors';
 import { config } from 'dotenv';
 import productRouter from './routes/product';
 import orderRouter from './routes/order';
-import validateOrder from './middlewares/validateOrder';
 import errorSender from './middlewares/error';
 import { requestLogger, errorLogger } from './middlewares/logger';
 import NotFoundError from './errors/not-found-error';
@@ -25,7 +24,7 @@ mongoose.connect(DB_ADDRESS);
 app.use(requestLogger);
 
 app.use('/product', productRouter);
-app.use('/order', validateOrder, orderRouter);
+app.use('/order', orderRouter);
 app.use('*', (_req: Request, _res: Response, next: NextFunction) => {
   next(new NotFoundError('404 Not Found'));
 });
